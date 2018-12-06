@@ -126,10 +126,12 @@ func (hs *HTTPServer) setIndexViewData(c *m.ReqContext) (*dtos.IndexViewData, er
 	dashboardChildNavs := []*dtos.NavLink{
 		{Text: "Home", Id: "home", Url: setting.AppSubUrl + "/", Icon: "gicon gicon-home", HideFromTabs: true},
 		{Text: "Divider", Divider: true, Id: "divider", HideFromTabs: true},
-		{Text: "Manage", Id: "manage-dashboards", Url: setting.AppSubUrl + "/dashboards", Icon: "gicon gicon-manage"},
-		{Text: "Playlists", Id: "playlists", Url: setting.AppSubUrl + "/playlists", Icon: "gicon gicon-playlists"},
-		{Text: "Snapshots", Id: "snapshots", Url: setting.AppSubUrl + "/dashboard/snapshots", Icon: "gicon gicon-snapshots"},
 	}
+	if c.OrgRole != m.ROLE_VIEWER {
+		dashboardChildNavs = append(dashboardChildNavs, &dtos.NavLink{Text: "Manage", Id: "manage-dashboards", Url: setting.AppSubUrl + "/dashboards", Icon: "gicon gicon-manage"})
+		dashboardChildNavs = append(dashboardChildNavs, &dtos.NavLink{Text: "Playlists", Id: "playlists", Url: setting.AppSubUrl + "/playlists", Icon: "gicon gicon-playlists"})
+	}
+	dashboardChildNavs = append(dashboardChildNavs, &dtos.NavLink{Text: "Snapshots", Id: "snapshots", Url: setting.AppSubUrl + "/dashboard/snapshots", Icon: "gicon gicon-snapshots"})
 
 	data.NavTree = append(data.NavTree, &dtos.NavLink{
 		Text:     "Dashboards",
@@ -337,18 +339,25 @@ func (hs *HTTPServer) setIndexViewData(c *m.ReqContext) (*dtos.IndexViewData, er
 		data.NavTree = append(data.NavTree, cfgNode)
 	}
 
+	var _subtitle = ""
+	var _helpChildren = []*dtos.NavLink{
+		{Text: "Keyboard shortcuts", Url: "/shortcuts", Icon: "fa fa-fw fa-keyboard-o", Target: "_self"},
+	}
+	if c.OrgRole != m.ROLE_VIEWER {
+		_helpChildren = append(_helpChildren, &dtos.NavLink{Text: "Community site", Url: "http://community.grafana.com", Icon: "fa fa-fw fa-comment", Target: "_blank"})
+		_helpChildren = append(_helpChildren, &dtos.NavLink{Text: "Documentation", Url: "http://docs.grafana.org", Icon: "fa fa-fw fa-file", Target: "_blank"})
+		_subtitle = fmt.Sprintf(`%s v%s (%s)`, setting.ApplicationName, setting.BuildVersion, setting.BuildCommit)
+	}
+	_helpChildren = append(_helpChildren, &dtos.NavLink{Text: "Support", Url: "https://get.teamviewer.com/moncockpit_support", Icon: "fa fa-fw fa-support", Target: "_blank"})
+
 	data.NavTree = append(data.NavTree, &dtos.NavLink{
 		Text:         "Help",
-		SubTitle:     fmt.Sprintf(`%s v%s (%s)`, setting.ApplicationName, setting.BuildVersion, setting.BuildCommit),
+		SubTitle:     _subtitle,
 		Id:           "help",
 		Url:          "#",
 		Icon:         "gicon gicon-question",
 		HideFromMenu: true,
-		Children: []*dtos.NavLink{
-			{Text: "Keyboard shortcuts", Url: "/shortcuts", Icon: "fa fa-fw fa-keyboard-o", Target: "_self"},
-			{Text: "Community site", Url: "http://community.grafana.com", Icon: "fa fa-fw fa-comment", Target: "_blank"},
-			{Text: "Documentation", Url: "http://docs.grafana.org", Icon: "fa fa-fw fa-file", Target: "_blank"},
-		},
+		Children:     _helpChildren,
 	})
 
 	hs.HooksService.RunIndexDataHooks(&data)
