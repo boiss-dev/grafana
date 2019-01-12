@@ -16,11 +16,15 @@ export function ShareModalCtrl($scope, $rootScope, $location, $timeout, timeSrv,
     $scope.dashboard = $scope.model && $scope.model.dashboard ? $scope.model.dashboard : $scope.dashboard; // ^
     $scope.modeSharePanel = $scope.panel ? true : false;
 
-    $scope.tabs = [{ title: 'Link', src: 'shareLink.html' }];
-
+    $scope.tabs = [];
+    if ($scope.dashboard.meta.canEdit) {
+      $scope.tabs.push({ title: 'Link', src: 'shareLink.html' });
+    }
     if ($scope.modeSharePanel) {
       $scope.modalTitle = 'Share Panel';
-      $scope.tabs.push({ title: 'Embed', src: 'shareEmbed.html' });
+      if ($scope.dashboard.meta.canEdit) {
+        $scope.tabs.push({ title: 'Embed', src: 'shareEmbed.html' });
+      }
     } else {
       $scope.modalTitle = 'Share';
     }
