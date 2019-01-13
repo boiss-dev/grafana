@@ -1,7 +1,7 @@
 <div class="login container">
   <div class="login-content">
     <div class="login-branding">
-      <img class="logo-icon" src="public/img/grafana_icon.svg" alt="Grafana" />
+      <img class="logo-icon" src="public/img/allianz_icon.svg" alt="Mon-Cockpit – Allianz" />
       <div class="logo-wordmark" />
     </div>
     <div class="login-outer-box">
@@ -13,7 +13,7 @@
           </div>
           <div class="login-form">
             <input type="password" name="password" class="gf-form-input login-form-input" required ng-model="formModel.password" id="inputPassword"
-              placeholder="password">
+              placeholder="Mot de passe">
           </div>
           <div class="login-button-group">
             <button type="submit" class="btn btn-large p-x-2" ng-if="!loggingIn" ng-click="submit();" ng-class="{'btn-inverse': !loginForm.$valid, 'btn-primary': loginForm.$valid}">
@@ -24,7 +24,7 @@
             </button>
             <div class="small login-button-forgot-password">
               <a href="user/password/send-reset-email">
-                Forgot your password?
+                Mot de passe oublié ?
               </a>
             </div>
           </div>
