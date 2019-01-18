@@ -1,0 +1,63 @@
+/*suppression du fond d'écran et mise à blanc*/
+.login {
+	background-image: none;
+	background-color: #FFF;
+}
+/*detourage léger de la div login*/
+.login-content {
+    background: #e6e6e6;
+}
+/*suppression de la marque Grafana */
+.main-view > div > div > div > div > div.login-branding > i {
+    display: none;
+}
+/*suppression du lien Forgot your password*/
+#login-view > form > div.login-button-group > div {
+    display: none;
+}
+
+/*suppression du side menu
+.sidemenu-open .sidemenu {
+    display: none;
+}*/
+
+
+/*suppression de la recherche par filtre Tags */
+body > grafana-app > div.main-view > div > div > div > dashnav > dashboard-search > div.search-container > div.search-dropdown > div.search-dropdown__col_2 > div  {
+    display: none;
+}
+
+/*suppression dans la timeline de la section custom*/
+.gf-timepicker-absolute-section {
+    display: none;
+}
+
+/*suppression des flèches et du zoom de dates*/
+.navbar-buttons--zoom {
+    display: none;
+}
+
+/*suppression de la petite fleche verticale dans le titre des indicateurs
+.fa-caret-down {
+    display: none;
+}*/
+
+/*suppression de la liste déroulante des titres...(View, Share, More, Panel JSON) pour les single stats
+body > grafana-app > div.main-view > div > div > div > div > div > dashboard-grid > div > div.react-grid-item.panel.cssTransforms.dropdown-menu-open > div > plugin-component > panel-plugin-singlestat > grafana-panel > div > div.panel-header.grid-drag-handle > panel-header > span > span.panel-menu-container.dropdown.open  {
+    display: none;
+} */
+
+/*suppression de la liste déroulante des titres...(View, Share, More, Panel JSON) pour les piecharts 
+body > grafana-app > div.main-view > div > div > div > div > div > dashboard-grid > div > div.react-grid-item.panel.cssTransforms.dropdown-menu-open > div > plugin-component > panel-plugin-grafana-piechart-panel > grafana-panel > div > div.panel-header.grid-drag-handle > panel-header > span > span.panel-menu-container.dropdown.open  {
+    display: none;
+} */
+
+/*suppression de la liste déroulante des titres...(View, Share, More, Panel JSON) pour les graphs 
+body > grafana-app > div.main-view > div > div > div > div > div > dashboard-grid > div > div.react-grid-item.panel.cssTransforms.dropdown-menu-open > div > plugin-component > panel-plugin-graph > grafana-panel > div > div.panel-header.grid-drag-handle > panel-header > span > span.panel-menu-container.dropdown.open > ul  {
+    display: none;
+} */
+
+/*Suppression des entetes de colonnes pour les tableaux*/
+.table-panel-table-header-inner {
+	display: none;
+}

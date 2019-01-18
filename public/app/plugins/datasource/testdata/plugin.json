@@ -13,8 +13,8 @@
       "url": "https://grafana.com"
     },
     "logos": {
-      "small": "../../../../img/allianz_icon.svg",
-      "large": "../../../../img/allianz_icon.svg"
+      "small": "../../../../custom/grafana_icon.svg",
+      "large": "../../../../custom/grafana_icon.svg"
     }
   }
 }
