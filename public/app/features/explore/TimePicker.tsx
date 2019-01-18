@@ -251,7 +251,7 @@ export default class TimePicker extends PureComponent<TimePickerProps, TimePicke
         </div>
 
         <div className="gf-timepicker-relative-section">
-          <h3 className="section-heading">Quick ranges</h3>
+          <h3 className="section-heading">Mes indicateurs il y a…</h3>
           {Object.keys(timeOptions).map(section => {
             const group = timeOptions[section];
             return (
