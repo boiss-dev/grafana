@@ -349,6 +349,7 @@ func (hs *HTTPServer) setIndexViewData(c *m.ReqContext) (*dtos.IndexViewData, er
 		_subtitle = fmt.Sprintf(`%s v%s (%s)`, setting.ApplicationName, setting.BuildVersion, setting.BuildCommit)
 	}
 	_helpChildren = append(_helpChildren, &dtos.NavLink{Text: "Support", Url: "https://get.teamviewer.com/moncockpit_support", Icon: "fa fa-fw fa-support", Target: "_blank"})
+	_helpChildren = append(_helpChildren, &dtos.NavLink{Text: "Planifier RDV", Url: "https://www.mon-cockpit.fr/planifier-rendez-vous/", Icon: "fa fa-fw fa-calendar", Target: "_blank"})
 
 	data.NavTree = append(data.NavTree, &dtos.NavLink{
 		Text:         "Help",
