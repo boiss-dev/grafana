@@ -348,8 +348,11 @@ func (hs *HTTPServer) setIndexViewData(c *m.ReqContext) (*dtos.IndexViewData, er
 		_helpChildren = append(_helpChildren, &dtos.NavLink{Text: "Documentation", Url: "http://docs.grafana.org", Icon: "fa fa-fw fa-file", Target: "_blank"})
 		_subtitle = fmt.Sprintf(`%s v%s (%s)`, setting.ApplicationName, setting.BuildVersion, setting.BuildCommit)
 	}
-	_helpChildren = append(_helpChildren, &dtos.NavLink{Text: "Support", Url: "https://get.teamviewer.com/moncockpit_support", Icon: "fa fa-fw fa-support", Target: "_blank"})
+	_helpChildren = append(_helpChildren, &dtos.NavLink{Text: "Prise de main", Url: "https://get.teamviewer.com/moncockpit_support", Icon: "fa fa-fw fa-support", Target: "_blank"})
 	_helpChildren = append(_helpChildren, &dtos.NavLink{Text: "Planifier RDV", Url: "https://www.mon-cockpit.fr/planifier-rendez-vous/", Icon: "fa fa-fw fa-calendar", Target: "_blank"})
+	_helpChildren = append(_helpChildren, &dtos.NavLink{Text: "Guide d'utilisation", Url: "https://allianz.mon-cockpit.fr/public/Guide_de_prise_en_main.pdf", Icon: "fa fa-fw fa-book", Target: "_blank"})
+	_helpChildren = append(_helpChildren, &dtos.NavLink{Text: "Mon Compte", Url: "https://www.mon-cockpit.fr/mon_compte/", Icon: "fa fa-fw fa-user-circle", Target: "_blank"})
+	_helpChildren = append(_helpChildren, &dtos.NavLink{Text: "Suggestions", Url: "https://www.mon-cockpit.fr/suggestions/", Icon: "fa fa-fw fa-lightbulb-o", Target: "_blank"})
 
 	data.NavTree = append(data.NavTree, &dtos.NavLink{
 		Text:         "Help",
