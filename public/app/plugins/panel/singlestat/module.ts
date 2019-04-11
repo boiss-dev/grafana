@@ -417,6 +417,14 @@ class SingleStatCtrl extends MetricsPanelCtrl {
     function getSpan(className, fontSize, applyColoring, value) {
       value = $sanitize(templateSrv.replace(value, data.scopedVars));
       value = applyColoring ? applyColoringThresholds(value) : value;
+
+      // c23
+      if (value === 'incomplete') {
+        const dataCompleteModal = document.getElementById('dataCompleteModal');
+        document.body.appendChild(dataCompleteModal);
+        dataCompleteModal.style.display = 'block';
+      }
+
       return '<span class="' + className + '" style="font-size:' + fontSize + '">' + value + '</span>';
     }
 
