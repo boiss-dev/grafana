@@ -419,7 +419,7 @@ class SingleStatCtrl extends MetricsPanelCtrl {
       value = applyColoring ? applyColoringThresholds(value) : value;
 
       // c23
-      if (value === 'incomplete') {
+      if (value.toLowerCase() === 'donnees incompletes') {
         const dataCompleteModal = document.getElementById('dataCompleteModal');
         document.body.appendChild(dataCompleteModal);
         dataCompleteModal.style.display = 'block';
