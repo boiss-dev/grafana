@@ -419,10 +419,21 @@ class SingleStatCtrl extends MetricsPanelCtrl {
       value = applyColoring ? applyColoringThresholds(value) : value;
 
       // c23
-      if (value.toLowerCase() === 'donnees incompletes') {
+      // value = 'popup:fa-superpowers|Attention les données WTB sont incompletes !';
+      const popupkey = 'popup:';
+      const separator = '|';
+
+      if (value.indexOf(popupkey) === 0 && value.indexOf(separator) > 0) {
+        const icon = value.substring(value.indexOf(popupkey) + popupkey.length, value.indexOf(separator));
+        const message = value.substring(value.indexOf(separator) + 1, value.length);
+
         const dataCompleteModal = document.getElementById('dataCompleteModal');
+        const dataCompleteModalText = dataCompleteModal.querySelector('.popup-message');
+        dataCompleteModalText.innerHTML = '<span class="fa ' + icon + '"></span> ' + message;
         document.body.appendChild(dataCompleteModal);
         dataCompleteModal.style.display = 'block';
+
+        document.addEventListener('click', closeCustomPopup);
       }
 
       return '<span class="' + className + '" style="font-size:' + fontSize + '">' + value + '</span>';
@@ -725,6 +736,15 @@ function getColorForValue(data, value) {
   }
 
   return _.first(data.colorMap);
+}
+
+function closeCustomPopup(event: any) {
+  const dataCompleteModal = document.getElementById('dataCompleteModal');
+  const isClickInside = dataCompleteModal.contains(event.target as Node);
+  if (!isClickInside) {
+    document.body.removeChild(dataCompleteModal);
+    document.removeEventListener('click', closeCustomPopup);
+  }
 }
 
 export { SingleStatCtrl, SingleStatCtrl as PanelCtrl, getColorForValue };
