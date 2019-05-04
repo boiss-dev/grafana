@@ -419,7 +419,7 @@ class SingleStatCtrl extends MetricsPanelCtrl {
       value = applyColoring ? applyColoringThresholds(value) : value;
 
       // c23
-      value = 'popup:fa-superpowers|Attention les données WTB sont incompletes ' + panel.id;
+      // value = 'popup:fa-superpowers|Attention les données WTB sont incompletes ' + panel.id;
       const popupkey = 'popup:';
       const separator = '|';
 
