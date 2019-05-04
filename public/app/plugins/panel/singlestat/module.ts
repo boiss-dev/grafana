@@ -419,7 +419,7 @@ class SingleStatCtrl extends MetricsPanelCtrl {
       value = applyColoring ? applyColoringThresholds(value) : value;
 
       // c23
-      // value = 'popup:fa-superpowers|Attention les données WTB sont incompletes !';
+      value = 'popup:fa-superpowers|Attention les données WTB sont incompletes ' + panel.id;
       const popupkey = 'popup:';
       const separator = '|';
 
@@ -427,13 +427,26 @@ class SingleStatCtrl extends MetricsPanelCtrl {
         const icon = value.substring(value.indexOf(popupkey) + popupkey.length, value.indexOf(separator));
         const message = value.substring(value.indexOf(separator) + 1, value.length);
 
-        const dataCompleteModal = document.getElementById('dataCompleteModal');
+        const dataCompleteModal = document.getElementById('dataCompleteModal-' + panel.id);
         const dataCompleteModalText = dataCompleteModal.querySelector('.popup-message');
         dataCompleteModalText.innerHTML = '<span class="fa ' + icon + '"></span> ' + message;
         document.body.appendChild(dataCompleteModal);
         dataCompleteModal.style.display = 'block';
 
-        document.addEventListener('click', closeCustomPopup);
+        const listener = (event: any) => {
+          const isClickInside = dataCompleteModal.contains(event.target as Node);
+          if (!isClickInside) {
+            window.removeEventListener('click', listener);
+            document.body.removeChild(dataCompleteModal);
+          }
+        };
+        window.addEventListener('click', listener);
+
+        const dataCompleteModalCloseButton = dataCompleteModal.querySelector('.close');
+        dataCompleteModalCloseButton.addEventListener('click', () => {
+          window.removeEventListener('click', listener);
+          document.body.removeChild(dataCompleteModal);
+        });
       }
 
       return '<span class="' + className + '" style="font-size:' + fontSize + '">' + value + '</span>';
@@ -736,15 +749,6 @@ function getColorForValue(data, value) {
   }
 
   return _.first(data.colorMap);
-}
-
-function closeCustomPopup(event: any) {
-  const dataCompleteModal = document.getElementById('dataCompleteModal');
-  const isClickInside = dataCompleteModal.contains(event.target as Node);
-  if (!isClickInside) {
-    document.body.removeChild(dataCompleteModal);
-    document.removeEventListener('click', closeCustomPopup);
-  }
 }
 
 export { SingleStatCtrl, SingleStatCtrl as PanelCtrl, getColorForValue };

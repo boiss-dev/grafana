@@ -1,5 +1,5 @@
 <style>
-  #dataCompleteModal .close {
+  .modal-data-complete .close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
@@ -8,13 +8,12 @@
 </style>
 
 <div class="singlestat-panel">
-
 </div>
 
-<div id="dataCompleteModal" class="modal hide in modal-container" tabindex="-1" aria-hidden="false" style="display: none;">
+<div ng-attr-id="{{ 'dataCompleteModal-' + ctrl.panel.id }}" class="modal hide in modal-container" tabindex="-1" aria-hidden="false" style="display: none;">
   <div class="modal-content modal-container" align="center">
-    <span onclick="document.body.removeChild(document.getElementById('dataCompleteModal'))" class="close">&times;</span>
-    <h2 class="popup-message">Some text. Some text. Some text.</h2>
+    <span class="close">&times;</span>
+    <h2 class="popup-message"></h2>
   </div>
 </div>
 
