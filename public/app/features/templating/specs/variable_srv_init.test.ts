@@ -19,9 +19,6 @@ describe('VariableSrv init', function(this: any) {
   };
 
   const $injector = {} as any;
-  const $rootscope = {
-    $on: () => {},
-  };
 
   let ctx = {} as any;
 
@@ -47,7 +44,7 @@ describe('VariableSrv init', function(this: any) {
           templateSrv,
         };
 
-        ctx.variableSrv = new VariableSrv($rootscope, $q, {}, $injector, templateSrv);
+        ctx.variableSrv = new VariableSrv($q, {}, $injector, templateSrv);
 
         $injector.instantiate = (variable, model) => {
           return getVarMockConstructor(variable, model, ctx);
