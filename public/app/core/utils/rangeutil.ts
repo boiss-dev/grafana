@@ -39,7 +39,7 @@ const rangeOptions = [
   { from: 'now-3y/d', to: 'now-3y/d', display: '...3 ans', section: 0 },
   { from: 'now-4y/d', to: 'now-4y/d', display: '...4 ans', section: 0 },
   { from: 'now/y', to: 'now', display: 'Depuis le 1er Janvier', section: 4 },
-  { from: 'now-1y/y', to: 'now', display: 'L’année dernière', section: 4 },
+  { from: 'now-1y/y', to: 'now-1y/y', display: 'L’année dernière', section: 4 },
   { from: 'now-6M', to: 'now', display: 'Les 6 derniers mois', section: 4 },
   { from: 'now/M', to: 'now', display: 'Ce mois', section: 4 },
 ];
