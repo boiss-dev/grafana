@@ -25,9 +25,9 @@
 
 <div ng-if="ctrl.isOpen" class="gf-timepicker-dropdown">
   <form name="timeForm" class="gf-timepicker-absolute-section">
-    <h3 class="section-heading">Custom range</h3>
+    <h3 class="section-heading">Plage de date personnalisée</h3>
 
-    <label class="small">From:</label>
+    <label class="small">Du :</label>
     <div class="gf-form-inline">
       <div class="gf-form max-width-28">
         <input type="text" class="gf-form-input input-large" ng-model="ctrl.editTimeRaw.from" input-datetime>
@@ -44,7 +44,7 @@
     </div>
 
 
-    <label class="small">To:</label>
+    <label class="small">Au :</label>
     <div class="gf-form-inline">
       <div class="gf-form max-width-28">
         <input type="text" class="gf-form-input input-large" ng-model="ctrl.editTimeRaw.to" input-datetime>
@@ -60,13 +60,13 @@
       <datepicker ng-model="ctrl.absolute.toJs" class="gf-timepicker-component" show-weeks="false" starting-day="ctrl.firstDayOfWeek" ng-change="ctrl.absoluteToChanged()"></datepicker>
     </div>
 
-    <label class="small">Refreshing every:</label>
+    <label class="small">Mettre à jour chaque :</label>
     <div class="gf-form-inline">
       <div class="gf-form max-width-28">
         <select ng-model="ctrl.refresh.value" class="gf-form-input input-medium" ng-options="f.value as f.text for f in ctrl.refresh.options"></select>
       </div>
       <div class="gf-form">
-        <button type="submit" class="btn gf-form-btn btn-secondary" ng-click="ctrl.applyCustom();" ng-disabled="!timeForm.$valid">Apply</button>
+        <button type="submit" class="btn gf-form-btn btn-secondary" ng-click="ctrl.applyCustom();" ng-disabled="!timeForm.$valid">Appliquer</button>
       </div>
     </div>
   </form>

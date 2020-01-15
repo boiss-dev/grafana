@@ -211,9 +211,9 @@ export default class TimePicker extends PureComponent<TimePickerProps, TimePicke
     return (
       <div ref={this.dropdownRef} className="gf-timepicker-dropdown">
         <div className="gf-timepicker-absolute-section">
-          <h3 className="section-heading">Custom range</h3>
+          <h3 className="section-heading">Plage de date personnalisée</h3>
 
-          <label className="small">From:</label>
+          <label className="small">Du :</label>
           <div className="gf-form-inline">
             <div className="gf-form max-width-28">
               <input
@@ -225,7 +225,7 @@ export default class TimePicker extends PureComponent<TimePickerProps, TimePicke
             </div>
           </div>
 
-          <label className="small">To:</label>
+          <label className="small">Au :</label>
           <div className="gf-form-inline">
             <div className="gf-form max-width-28">
               <input
@@ -245,7 +245,7 @@ export default class TimePicker extends PureComponent<TimePickerProps, TimePicke
           </div> */}
           <div className="gf-form">
             <button className="btn gf-form-btn btn-secondary" onClick={this.handleClickApply}>
-              Apply
+              Appliquer
             </button>
           </div>
         </div>
