@@ -27,11 +27,6 @@ body > grafana-app > div.main-view > div > div > div > dashnav > dashboard-searc
     display: none;
 }
 
-/*suppression dans la timeline de la section custom*/
-.gf-timepicker-absolute-section {
-    display: none;
-}
-
 /*suppression des flèches et du zoom de dates*/
 .navbar-buttons--zoom {
     display: none;
