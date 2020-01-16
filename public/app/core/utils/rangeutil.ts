@@ -54,7 +54,7 @@ _.each(rangeOptions, frame => {
 export function getRelativeTimesList(timepickerSettings, currentDisplay) {
   if (timepickerSettings.installationDate) {
     rangeOptions.find(obj => {
-      return obj.from === 'now/d';
+      return obj.display === 'Aujourd\'hui';
     }).from = timepickerSettings.installationDate;
   }
 
