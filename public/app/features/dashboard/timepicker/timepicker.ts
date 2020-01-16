@@ -105,7 +105,14 @@ export class TimePickerCtrl {
 
     this.onRefresh();
     this.editTimeRaw = this.timeRaw;
-    this.timeOptions = rangeUtil.getRelativeTimesList(this.panel, this.rangeString);
+
+    var installationDate = this.dashboard.originalTemplating.find(obj => {
+      return obj.name === 'date_inst';
+    })
+    console.log(installationDate.current.value);
+
+    this.timeOptions = rangeUtil.getRelativeTimesList({ installationDate: installationDate.current.value }, this.rangeString);
+
     this.refresh = {
       value: this.dashboard.refresh,
       options: _.map(this.panel.refresh_intervals, (interval: any) => {

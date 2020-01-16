@@ -52,6 +52,12 @@ _.each(rangeOptions, frame => {
 });
 
 export function getRelativeTimesList(timepickerSettings, currentDisplay) {
+  if (timepickerSettings.installationDate) {
+    rangeOptions.find(obj => {
+      return obj.from === 'now/d';
+    }).from = timepickerSettings.installationDate;
+  }
+
   const groups = _.groupBy(rangeOptions, (option: any) => {
     option.active = option.display === currentDisplay;
     return option.section;
