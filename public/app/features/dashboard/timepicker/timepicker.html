@@ -60,8 +60,8 @@
       <datepicker ng-model="ctrl.absolute.toJs" class="gf-timepicker-component" show-weeks="false" starting-day="ctrl.firstDayOfWeek" ng-change="ctrl.absoluteToChanged()"></datepicker>
     </div>
 
-    <label class="small">Mettre à jour chaque :</label>
-    <div class="gf-form-inline">
+    <label class="small" ng-if="false">Mettre à jour chaque :</label>
+    <div class="gf-form-inline" ng-if="false">
       <div class="gf-form max-width-28">
         <select ng-model="ctrl.refresh.value" class="gf-form-input input-medium" ng-options="f.value as f.text for f in ctrl.refresh.options"></select>
       </div>
