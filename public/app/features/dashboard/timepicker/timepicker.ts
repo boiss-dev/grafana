@@ -106,11 +106,18 @@ export class TimePickerCtrl {
     this.onRefresh();
     this.editTimeRaw = this.timeRaw;
 
-    var installationDate = this.dashboard.originalTemplating.find(obj => {
+    var numberOfDaySinceInstallation = this.dashboard.templating.list.find(obj => {
       return obj.name === 'date_inst';
-    })
+    }).current.value.split('d')[0];
 
-    this.timeOptions = rangeUtil.getRelativeTimesList({ installationDate: installationDate.current.value }, this.rangeString);
+    var settings = {};
+    if (parseInt(numberOfDaySinceInstallation)) {
+      var installationDate = new Date();
+      installationDate.setDate(installationDate.getDate() - numberOfDaySinceInstallation);
+      settings = { installationDate: installationDate };
+    }
+
+    this.timeOptions = rangeUtil.getRelativeTimesList(settings, this.rangeString);
 
     this.refresh = {
       value: this.dashboard.refresh,
