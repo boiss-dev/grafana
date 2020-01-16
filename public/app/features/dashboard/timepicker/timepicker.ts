@@ -109,7 +109,6 @@ export class TimePickerCtrl {
     var installationDate = this.dashboard.originalTemplating.find(obj => {
       return obj.name === 'date_inst';
     })
-    console.log(installationDate.current.value);
 
     this.timeOptions = rangeUtil.getRelativeTimesList({ installationDate: installationDate.current.value }, this.rangeString);
 
