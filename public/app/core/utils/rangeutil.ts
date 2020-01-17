@@ -42,6 +42,7 @@ const rangeOptions = [
   { from: 'now-1y/y', to: 'now-1y/y', display: 'L’année dernière', section: 4 },
   { from: 'now-6M', to: 'now', display: 'Les 6 derniers mois', section: 4 },
   { from: 'now/M', to: 'now', display: 'Ce mois', section: 4 },
+  { from: 'now', to: 'now', display: 'Depuis le début', section: 4 },
 ];
 
 const absoluteFormat = 'MMM D, YYYY HH:mm:ss';
@@ -54,7 +55,7 @@ _.each(rangeOptions, frame => {
 export function getRelativeTimesList(timepickerSettings, currentDisplay) {
   if (timepickerSettings.installationDate) {
     rangeOptions.find(obj => {
-      return obj.display === 'Aujourd\'hui';
+      return obj.display === 'Depuis le début';
     }).from = timepickerSettings.installationDate;
   }
 
