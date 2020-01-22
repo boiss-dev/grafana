@@ -106,9 +106,14 @@ export class TimePickerCtrl {
     this.onRefresh();
     this.editTimeRaw = this.timeRaw;
 
-    const numberOfDaySinceInstallation = this.dashboard.templating.list.find(obj => {
+    const numberOfDaySinceInstallationObj = this.dashboard.templating.list.find(obj => {
       return obj.name === 'date_inst';
-    }).current.value.split('d')[0];
+    })
+
+    let numberOfDaySinceInstallation: any;
+    if (numberOfDaySinceInstallationObj) {
+      numberOfDaySinceInstallation = numberOfDaySinceInstallationObj.current.value.split('d')[0];
+    }
 
     let settings = {};
     if (parseInt(numberOfDaySinceInstallation, 10)) {
