@@ -53,10 +53,20 @@ _.each(rangeOptions, frame => {
 });
 
 export function getRelativeTimesList(timepickerSettings, currentDisplay) {
-  if (timepickerSettings.installationDate) {
-    rangeOptions.find(obj => {
-      return obj.display === 'Depuis le début';
-    }).from = timepickerSettings.installationDate;
+  if (timepickerSettings.option) {
+    const installationDateOption = rangeOptions.find(obj => {
+      return obj.display === timepickerSettings.option;
+    })
+    if (installationDateOption) {
+      if (timepickerSettings.installationDate) {
+        installationDateOption.from = timepickerSettings.installationDate;
+      } else {
+        const rangeOptionIndex = rangeOptions.indexOf(installationDateOption);
+        if (rangeOptionIndex > -1) {
+          rangeOptions.splice(rangeOptionIndex, 1);
+        }
+      }
+    }
   }
 
   const groups = _.groupBy(rangeOptions, (option: any) => {

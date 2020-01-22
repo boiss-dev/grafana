@@ -14,8 +14,6 @@ export class DashboardRow extends React.Component<DashboardRowProps, any> {
   constructor(props) {
     super(props);
 
-    console.log('DashboardRow: constructor');
-
     this.state = {
       collapsed: this.props.panel.collapsed,
     };

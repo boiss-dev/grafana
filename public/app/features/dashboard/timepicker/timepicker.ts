@@ -115,11 +115,11 @@ export class TimePickerCtrl {
       numberOfDaySinceInstallation = numberOfDaySinceInstallationObj.current.value.split('d')[0];
     }
 
-    let settings = {};
+    let settings = { option: 'Depuis le début', installationDate: null };
     if (parseInt(numberOfDaySinceInstallation, 10)) {
       const installationDate = new Date();
       installationDate.setDate(installationDate.getDate() - numberOfDaySinceInstallation);
-      settings = { installationDate: this.getAbsoluteMomentForTimezone(installationDate) };
+      settings.installationDate = this.getAbsoluteMomentForTimezone(installationDate);
     }
 
     this.timeOptions = rangeUtil.getRelativeTimesList(settings, this.rangeString);
