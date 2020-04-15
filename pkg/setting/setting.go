@@ -43,6 +43,9 @@ var (
 )
 
 var (
+	//C23
+	IsCollabInstance	bool
+	
 	// App settings.
 	Env          = DEV
 	AppUrl       string
@@ -545,6 +548,9 @@ func (cfg *Cfg) Load(args *CommandLineArgs) error {
 	if IsEnterprise {
 		ApplicationName = APP_NAME_ENTERPRISE
 	}
+
+	// C23
+	IsCollabInstance = iniFile.Section("c23").Key("is_collab_instance").MustBool(false)
 
 	Env = iniFile.Section("").Key("app_mode").MustString("development")
 	InstanceName = iniFile.Section("").Key("instance_name").MustString("unknown_instance_name")

@@ -168,11 +168,14 @@ func (hs *HTTPServer) setIndexViewData(c *m.ReqContext) (*dtos.IndexViewData, er
 			Img:          data.User.GravatarUrl,
 			Url:          setting.AppSubUrl + "/profile",
 			HideFromMenu: true,
-			Children: []*dtos.NavLink{
-				{Text: "Preferences", Id: "profile-settings", Url: setting.AppSubUrl + "/profile", Icon: "gicon gicon-preferences"},
-			},
+			Children: []*dtos.NavLink{},
 		}
-		if c.OrgRole != m.ROLE_VIEWER {
+
+		if !setting.IsCollabInstance {
+			profileNode.Children = append(profileNode.Children, &dtos.NavLink{Text: "Preferences", Id: "profile-settings", Url: setting.AppSubUrl + "/profile", Icon: "gicon gicon-preferences"})
+		}	
+
+		if c.IsGrafanaAdmin {
 			profileNode.Children = append(profileNode.Children, &dtos.NavLink{Text: "Change Password", Id: "change-password", Url: setting.AppSubUrl + "/profile/password", Icon: "fa fa-fw fa-lock", HideFromMenu: true})
 		}
 
@@ -356,15 +359,17 @@ func (hs *HTTPServer) setIndexViewData(c *m.ReqContext) (*dtos.IndexViewData, er
 	_helpChildren = append(_helpChildren, &dtos.NavLink{Text: "Mon Compte", Url: "https://www.mon-cockpit.fr/mon_compte/", Icon: "fa fa-fw fa-user-circle", Target: "_blank"})
 	_helpChildren = append(_helpChildren, &dtos.NavLink{Text: "Suggestions", Url: "https://www.mon-cockpit.fr/suggestions/", Icon: "fa fa-fw fa-lightbulb-o", Target: "_blank"})
 
-	data.NavTree = append(data.NavTree, &dtos.NavLink{
-		Text:         "Help",
-		SubTitle:     _subtitle,
-		Id:           "help",
-		Url:          "#",
-		Icon:         "gicon gicon-question",
-		HideFromMenu: true,
-		Children:     _helpChildren,
-	})
+	if (!setting.IsCollabInstance) {
+		data.NavTree = append(data.NavTree, &dtos.NavLink{
+			Text:         "Help",
+			SubTitle:     _subtitle,
+			Id:           "help",
+			Url:          "#",
+			Icon:         "gicon gicon-question",
+			HideFromMenu: true,
+			Children:     _helpChildren,
+		})
+	}
 
 	hs.HooksService.RunIndexDataHooks(&data)
 	return &data, nil
