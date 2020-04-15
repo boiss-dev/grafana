@@ -11,6 +11,7 @@ export class ProfileCtrl {
   showOrgsList = false;
   readonlyLoginFields = config.disableLoginForm;
   navModel: any;
+  showUserProfile = false;
 
   /** @ngInject */
   constructor(private backendSrv, private contextSrv, private $location, navModelSrv) {
@@ -23,6 +24,7 @@ export class ProfileCtrl {
   getUser() {
     this.backendSrv.get('/api/user').then(user => {
       this.user = user;
+      this.showUserProfile = user.isGrafanaAdmin;
       this.user.theme = user.theme || 'dark';
     });
   }
