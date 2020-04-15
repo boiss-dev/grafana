@@ -170,8 +170,10 @@ func (hs *HTTPServer) setIndexViewData(c *m.ReqContext) (*dtos.IndexViewData, er
 			HideFromMenu: true,
 			Children: []*dtos.NavLink{
 				{Text: "Preferences", Id: "profile-settings", Url: setting.AppSubUrl + "/profile", Icon: "gicon gicon-preferences"},
-				{Text: "Change Password", Id: "change-password", Url: setting.AppSubUrl + "/profile/password", Icon: "fa fa-fw fa-lock", HideFromMenu: true},
 			},
+		}
+		if c.OrgRole != m.ROLE_VIEWER {
+			profileNode.Children = append(profileNode.Children, &dtos.NavLink				{Text: "Change Password", Id: "change-password", Url: setting.AppSubUrl + "/profile/password", Icon: "fa fa-fw fa-lock", HideFromMenu: true})
 		}
 
 		if !setting.DisableSignoutMenu {
