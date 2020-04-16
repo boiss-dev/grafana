@@ -171,7 +171,7 @@ func (hs *HTTPServer) setIndexViewData(c *m.ReqContext) (*dtos.IndexViewData, er
 			Children: []*dtos.NavLink{},
 		}
 
-		if !setting.IsCollabInstance {
+		if (!setting.IsCollabInstance || c.IsGrafanaAdmin) {
 			profileNode.Children = append(profileNode.Children, &dtos.NavLink{Text: "Preferences", Id: "profile-settings", Url: setting.AppSubUrl + "/profile", Icon: "gicon gicon-preferences"})
 		}	
 
