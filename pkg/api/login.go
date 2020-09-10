@@ -152,15 +152,15 @@ func tryOAuthAutoLogin(c *models.ReqContext) bool {
 
 func (hs *HTTPServer) LoginAPIPing(c *models.ReqContext) Response {
 	if c.IsSignedIn || c.IsAnonymous {
-		return JSON(200, "Logged in")
+		return JSON(200, "Connecté")
 	}
 
-	return Error(401, "Unauthorized", nil)
+	return Error(401, "Non autorisé", nil)
 }
 
 func (hs *HTTPServer) LoginPost(c *models.ReqContext, cmd dtos.LoginCommand) Response {
 	if setting.DisableLoginForm {
-		return Error(401, "Login is disabled", nil)
+		return Error(401, "La connexion est désactivée", nil)
 	}
 
 	authQuery := &models.LoginUserQuery{
@@ -171,7 +171,7 @@ func (hs *HTTPServer) LoginPost(c *models.ReqContext, cmd dtos.LoginCommand) Res
 	}
 
 	if err := bus.Dispatch(authQuery); err != nil {
-		e401 := Error(401, "Invalid username or password", err)
+		e401 := Error(401, "Nom d'utilisateur ou mot de passe invalide", err)
 		if err == login.ErrInvalidCredentials || err == login.ErrTooManyLoginAttempts {
 			return e401
 		}
@@ -183,7 +183,7 @@ func (hs *HTTPServer) LoginPost(c *models.ReqContext, cmd dtos.LoginCommand) Res
 			return e401
 		}
 
-		return Error(500, "Error while trying to authenticate user", err)
+		return Error(500, "Erreur lors de la tentative d'authentification de l'utilisateur", err)
 	}
 
 	user := authQuery.User
@@ -194,7 +194,7 @@ func (hs *HTTPServer) LoginPost(c *models.ReqContext, cmd dtos.LoginCommand) Res
 	}
 
 	result := map[string]interface{}{
-		"message": "Logged in",
+		"message": "Connecté",
 	}
 
 	if redirectTo, _ := url.QueryUnescape(c.GetCookie("redirect_to")); len(redirectTo) > 0 {

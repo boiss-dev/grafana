@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { css, cx } from 'emotion';
+import { css } from 'emotion';
 import { useTheme } from '@grafana/ui';
 
 export interface BrandComponentProps {
@@ -8,21 +8,15 @@ export interface BrandComponentProps {
 }
 
 const LoginLogo: FC<BrandComponentProps> = ({ className }) => {
-  return <img className={className} src="public/img/grafana_icon.svg" alt="Grafana" />;
+  return <img className={className} src="public/custom/allianz-icon.svg" alt="Mon-Cockpit" />;
 };
 
 const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
-  const theme = useTheme();
-  const background = css`
-    background: url(public/img/login_background_${theme.isDark ? 'dark' : 'light'}.svg);
-    background-size: cover;
-  `;
-
-  return <div className={cx(background, className)}>{children}</div>;
+  return <div className={className}>{children}</div>;
 };
 
 const MenuLogo: FC<BrandComponentProps> = ({ className }) => {
-  return <img className={className} src="public/img/grafana_icon.svg" alt="Grafana" />;
+  return <img className={className} src="public/custom/allianz-icon.svg" alt="Mon-Cockpit" />;
 };
 
 const LoginBoxBackground = () => {
@@ -38,8 +32,8 @@ export class Branding {
   static LoginBackground = LoginBackground;
   static MenuLogo = MenuLogo;
   static LoginBoxBackground = LoginBoxBackground;
-  static AppTitle = 'Grafana';
-  static LoginTitle = 'Welcome to Grafana';
+  static AppTitle = 'Mon-Cockpit';
+  static LoginTitle = 'Bienvenue sur mon Cockpit';
   static GetLoginSubTitle = () => {
     const slogans = [
       "Don't get in the way of the data",

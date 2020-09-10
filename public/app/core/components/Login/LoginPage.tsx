@@ -13,6 +13,7 @@ import { HorizontalGroup, LinkButton } from '@grafana/ui';
 import { LoginLayout, InnerBox } from './LoginLayout';
 
 const forgottenPasswordStyles = css`
+  display: none;
   padding: 0;
   margin-top: 4px;
 `;

@@ -29,26 +29,26 @@ export const LoginForm: FC<Props> = ({ children, onSubmit, isLoggingIn, password
       <Form onSubmit={onSubmit} validateOn="onChange">
         {({ register, errors }) => (
           <>
-            <Field label="Email or username" invalid={!!errors.user} error={errors.user?.message}>
+            <Field label="Email" invalid={!!errors.user} error={errors.user?.message}>
               <Input
                 autoFocus
                 name="user"
-                ref={register({ required: 'Email or username is required' })}
+                ref={register({ required: 'Email obligatoire' })}
                 placeholder={loginHint}
                 aria-label={selectors.pages.Login.username}
               />
             </Field>
-            <Field label="Password" invalid={!!errors.password} error={errors.password?.message}>
+            <Field label="Mot de passe" invalid={!!errors.password} error={errors.password?.message}>
               <Input
                 name="password"
                 type="password"
                 placeholder={passwordHint}
-                ref={register({ required: 'Password is required' })}
+                ref={register({ required: 'Mot de passe obligatoire' })}
                 aria-label={selectors.pages.Login.password}
               />
             </Field>
             <Button aria-label={selectors.pages.Login.submit} className={submitButton} disabled={isLoggingIn}>
-              {isLoggingIn ? 'Logging in...' : 'Log in'}
+              {isLoggingIn ? 'Connexion...' : 'Se connecter'}
             </Button>
             {children}
           </>
