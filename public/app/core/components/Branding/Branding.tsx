@@ -33,7 +33,7 @@ export class Branding {
   static MenuLogo = MenuLogo;
   static LoginBoxBackground = LoginBoxBackground;
   static AppTitle = 'Mon-Cockpit';
-  static LoginTitle = 'Bienvenue sur mon Cockpit';
+  static LoginTitle = 'Bienvenue sur Mon-Cockpit';
   static GetLoginSubTitle = () => {
     const slogans = [
       "Don't get in the way of the data",
