@@ -9,26 +9,26 @@ import { timeZoneAbbrevation, dateTimeFormat, dateTimeFormatTimeAgo } from './fo
 import { dateTimeParse } from './parser';
 
 const spans: { [key: string]: { display: string; section?: number } } = {
-  s: { display: 'second' },
+  s: { display: 'seconde' },
   m: { display: 'minute' },
-  h: { display: 'hour' },
-  d: { display: 'day' },
-  w: { display: 'week' },
-  M: { display: 'month' },
-  y: { display: 'year' },
+  h: { display: 'heure' },
+  d: { display: 'jour' },
+  w: { display: 'semaine' },
+  M: { display: 'mois' },
+  y: { display: 'année' },
 };
 
 const rangeOptions = [
   { from: 'now/d', to: 'now/d', display: 'Today', section: 2 },
-  { from: 'now/d', to: 'now', display: 'Today so far', section: 2 },
+  { from: 'now/d', to: 'now', display: "Aujourd'hui", section: 2 },
   { from: 'now/w', to: 'now/w', display: 'This week', section: 2 },
-  { from: 'now/w', to: 'now', display: 'This week so far', section: 2 },
+  { from: 'now/w', to: 'now', display: 'Cette semaine', section: 2 },
   { from: 'now/M', to: 'now/M', display: 'This month', section: 2 },
-  { from: 'now/M', to: 'now', display: 'This month so far', section: 2 },
+  { from: 'now/M', to: 'now', display: 'Ce mois', section: 2 },
   { from: 'now/y', to: 'now/y', display: 'This year', section: 2 },
-  { from: 'now/y', to: 'now', display: 'This year so far', section: 2 },
+  { from: 'now/y', to: 'now', display: 'Cette année', section: 2 },
 
-  { from: 'now-1d/d', to: 'now-1d/d', display: 'Yesterday', section: 1 },
+  { from: 'now-1d/d', to: 'now-1d/d', display: 'Hier', section: 1 },
   {
     from: 'now-2d/d',
     to: 'now-2d/d',
@@ -41,9 +41,9 @@ const rangeOptions = [
     display: 'This day last week',
     section: 1,
   },
-  { from: 'now-1w/w', to: 'now-1w/w', display: 'Previous week', section: 1 },
-  { from: 'now-1M/M', to: 'now-1M/M', display: 'Previous month', section: 1 },
-  { from: 'now-1y/y', to: 'now-1y/y', display: 'Previous year', section: 1 },
+  { from: 'now-1w/w', to: 'now-1w/w', display: 'La semaine dernière', section: 1 },
+  { from: 'now-1M/M', to: 'now-1M/M', display: 'Le mois dernier', section: 1 },
+  { from: 'now-1y/y', to: 'now-1y/y', display: "L'année dernière", section: 1 },
 
   { from: 'now-5m', to: 'now', display: 'Last 5 minutes', section: 3 },
   { from: 'now-15m', to: 'now', display: 'Last 15 minutes', section: 3 },
@@ -55,8 +55,9 @@ const rangeOptions = [
   { from: 'now-24h', to: 'now', display: 'Last 24 hours', section: 3 },
   { from: 'now-2d', to: 'now', display: 'Last 2 days', section: 0 },
   { from: 'now-7d', to: 'now', display: 'Last 7 days', section: 0 },
-  { from: 'now-30d', to: 'now', display: 'Last 30 days', section: 0 },
-  { from: 'now-90d', to: 'now', display: 'Last 90 days', section: 0 },
+  { from: 'now-30d', to: 'now', display: 'Les 30 derniers jours', section: 0 },
+  { from: 'now-90d', to: 'now', display: 'Les 90 derniers jours', section: 0 },
+  { from: 'now-180d', to: 'now', display: 'Les 180 derniers jours', section: 0 },
   { from: 'now-6M', to: 'now', display: 'Last 6 months', section: 0 },
   { from: 'now-1y', to: 'now', display: 'Last 1 year', section: 0 },
   { from: 'now-2y', to: 'now', display: 'Last 2 years', section: 0 },

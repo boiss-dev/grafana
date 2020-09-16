@@ -161,7 +161,7 @@ export const TimePickerContentWithScreenSize: React.FC<PropsWithScreenSize> = pr
         <CustomScrollbar className={styles.rightSide}>
           <NarrowScreenForm {...props} visible={!isFullscreen} historyOptions={historyOptions} />
           <TimeRangeList
-            title="Relative time ranges"
+            title="Plages de temps relatives"
             options={quickOptions}
             onSelect={props.onChange}
             value={props.value}
@@ -169,7 +169,7 @@ export const TimePickerContentWithScreenSize: React.FC<PropsWithScreenSize> = pr
           />
           <div className={styles.spacing} />
           <TimeRangeList
-            title="Other quick ranges"
+            title="Autres plages de temps"
             options={otherOptions}
             onSelect={props.onChange}
             value={props.value}
@@ -208,7 +208,7 @@ const NarrowScreenForm: React.FC<FormProps> = props => {
         className={styles.header}
         onClick={() => setCollapsed(!collapsed)}
       >
-        <TimePickerTitle>Absolute time range</TimePickerTitle>
+        <TimePickerTitle>Plage de temps absolue</TimePickerTitle>
         {<Icon name={collapsed ? 'angle-up' : 'angle-down'} />}
       </div>
       {collapsed && (
@@ -249,7 +249,7 @@ const FullScreenForm: React.FC<FormProps> = props => {
     <>
       <div className={styles.container}>
         <div aria-label="TimePicker absolute time range" className={styles.title}>
-          <TimePickerTitle>Absolute time range</TimePickerTitle>
+          <TimePickerTitle>Plage de temps absolue</TimePickerTitle>
         </div>
         <TimeRangeForm
           value={props.value}
@@ -283,19 +283,9 @@ const EmptyRecentList = memo(() => {
     <div className={styles.container}>
       <div>
         <span>
-          It looks like you haven't used this timer picker before. As soon as you enter some time intervals, recently
-          used intervals will appear here.
+          Il semble que vous n'ayez jamais utilisé ces plages de temps auparavant. Dès que vous entrez des intervalles
+          de temps, les intervalles récemment utilisés apparaîtront ici.
         </span>
-      </div>
-      <div>
-        <a
-          className={styles.link}
-          href="https://grafana.com/docs/grafana/latest/dashboards/time-range-controls"
-          target="_new"
-        >
-          Read the documentation
-        </a>
-        <span> to find out more about how to enter custom time ranges.</span>
       </div>
     </div>
   );
