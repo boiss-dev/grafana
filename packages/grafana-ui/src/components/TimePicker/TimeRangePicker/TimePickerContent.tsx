@@ -9,7 +9,6 @@ import { mapRangeToTimeOption } from './mapper';
 import { TimePickerTitle } from './TimePickerTitle';
 import { TimeRangeForm } from './TimeRangeForm';
 import { TimeRangeList } from './TimeRangeList';
-import { TimePickerFooter } from './TimePickerFooter';
 
 const getStyles = stylesFactory((theme: GrafanaTheme, isReversed) => {
   const containerBorder = theme.isDark ? theme.palette.dark9 : theme.palette.gray5;
@@ -177,9 +176,6 @@ export const TimePickerContentWithScreenSize: React.FC<PropsWithScreenSize> = pr
           />
         </CustomScrollbar>
       </div>
-      {!props.hideTimeZone && isFullscreen && (
-        <TimePickerFooter timeZone={props.timeZone} onChangeTimeZone={props.onChangeTimeZone} />
-      )}
     </div>
   );
 };
