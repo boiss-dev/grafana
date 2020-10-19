@@ -360,6 +360,17 @@ func (hs *HTTPServer) setIndexViewData(c *models.ReqContext) (*dtos.IndexViewDat
 		})
 	}
 
+	referAFriendNode := &dtos.NavLink{
+		Text:         "Parrainage",
+		Id:           "refer-a-friend",
+		Url:          "https://www.mon-cockpit.fr/parrainage?org=" + c.OrgName,
+		Target:       "_blank",
+		Icon:         "game-structure",
+		HideFromMenu: true,
+		SortWeight:   dtos.WeightCreate,
+	}
+	data.NavTree = append(data.NavTree, referAFriendNode)
+
 	helpVersion := fmt.Sprintf(`%s v%s (%s)`, setting.ApplicationName, setting.BuildVersion, setting.BuildCommit)
 	if hs.Cfg.AnonymousHideVersion && !c.IsSignedIn {
 		helpVersion = setting.ApplicationName
