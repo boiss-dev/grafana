@@ -4,7 +4,6 @@ import { getTitleFromNavModel } from 'app/core/selectors/navModel';
 
 // Components
 import PageHeader from '../PageHeader/PageHeader';
-import { Footer } from '../Footer/Footer';
 import PageContents from './PageContents';
 import { CustomScrollbar } from '@grafana/ui';
 import { NavModel } from '@grafana/data';
@@ -51,7 +50,6 @@ class Page extends Component<Props> {
           <div className="page-scrollbar-content">
             <PageHeader model={navModel} />
             {this.props.children}
-            <Footer />
           </div>
         </CustomScrollbar>
       </div>
