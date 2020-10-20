@@ -13,12 +13,14 @@ import { UserTeams } from './UserTeams';
 import { UserSessions } from './UserSessions';
 import { UserOrganizations } from './UserOrganizations';
 import { UserProfileEditForm } from './UserProfileEditForm';
+import { ContextSrv } from '../../core/services/context_srv';
 
 export interface Props {
   navModel: NavModel;
+  $contextSrv: ContextSrv;
 }
 
-export const UserProfileEdit: FC<Props> = ({ navModel }) => (
+export const UserProfileEdit: FC<Props> = ({ navModel, $contextSrv }) => (
   <Page navModel={navModel}>
     <UserProvider userId={config.bootData.user.id}>
       {(api: UserAPI, states: LoadingStates, teams: Team[], orgs: UserOrg[], sessions: UserSession[], user: User) => {
@@ -27,15 +29,17 @@ export const UserProfileEdit: FC<Props> = ({ navModel }) => (
             {states.loadUser ? (
               <LoadingPlaceholder text="Loading user profile..." />
             ) : (
-              <UserProfileEditForm
-                updateProfile={api.updateUserProfile}
-                isSavingUser={states.updateUserProfile}
-                user={user}
-              />
+              $contextSrv.isGrafanaAdmin && (
+                <UserProfileEditForm
+                  updateProfile={api.updateUserProfile}
+                  isSavingUser={states.updateUserProfile}
+                  user={user}
+                />
+              )
             )}
             <SharedPreferences resourceUri="user" />
             <UserTeams isLoading={states.loadTeams} loadTeams={api.loadTeams} teams={teams} />
-            {!states.loadUser && (
+            {!states.loadUser && $contextSrv.isGrafanaAdmin && (
               <>
                 <UserOrganizations
                   isLoading={states.loadOrgs}
