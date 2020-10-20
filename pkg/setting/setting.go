@@ -54,6 +54,7 @@ const (
 var (
 	//C23
 	IsCollabInstance bool
+
 	// App settings.
 	Env              = DEV
 	AppUrl           string

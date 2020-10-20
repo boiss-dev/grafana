@@ -171,16 +171,42 @@ func (hs *HTTPServer) setIndexViewData(c *models.ReqContext) (*dtos.IndexViewDat
 			Url:          setting.AppSubUrl + "/profile",
 			HideFromMenu: true,
 			SortWeight:   dtos.WeightProfile,
-			Children: []*dtos.NavLink{
-				{Text: "Preferences", Id: "profile-settings", Url: setting.AppSubUrl + "/profile", Icon: "sliders-v-alt"},
-				{Text: "Change Password", Id: "change-password", Url: setting.AppSubUrl + "/profile/password", Icon: "lock", HideFromMenu: true},
-			},
+			Children:     []*dtos.NavLink{},
+		}
+
+		if !setting.IsCollabInstance || c.IsGrafanaAdmin {
+			profileNode.Children = append(profileNode.Children, &dtos.NavLink{
+				Text: "Préférences",
+				Id:   "profile-settings",
+				Url:  setting.AppSubUrl + "/profile",
+				Icon: "sliders-v-alt",
+			})
+		}
+
+		if c.IsGrafanaAdmin {
+			profileNode.Children = append(profileNode.Children, &dtos.NavLink{
+				Text: "Changer le mot de passe",
+				Id:   "change-password",
+				Url:  setting.AppSubUrl + "/profile/password",
+				Icon: "lock",
+			})
+		} else {
+			if !setting.IsCollabInstance {
+				profileNode.Children = append(profileNode.Children, &dtos.NavLink{
+					Text:         "Changer le mot de passe",
+					Id:           "change-password",
+					Url:          "https://www.mon-cockpit.fr/forgot_password/",
+					Icon:         "lock",
+					HideFromMenu: true,
+					Target:       "_blank",
+				})
+			}
 		}
 
 		if !setting.DisableSignoutMenu {
 			// add sign out first
 			profileNode.Children = append(profileNode.Children, &dtos.NavLink{
-				Text:         "Sign out",
+				Text:         "Déconnexion",
 				Id:           "sign-out",
 				Url:          setting.AppSubUrl + "/logout",
 				Icon:         "arrow-from-right",
