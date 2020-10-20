@@ -130,10 +130,23 @@ func (hs *HTTPServer) setIndexViewData(c *models.ReqContext) (*dtos.IndexViewDat
 
 	dashboardChildNavs := []*dtos.NavLink{
 		{Text: "Home", Id: "home", Url: setting.AppSubUrl + "/", Icon: "home-alt", HideFromTabs: true},
-		{Text: "Divider", Divider: true, Id: "divider", HideFromTabs: true},
-		{Text: "Manage", Id: "manage-dashboards", Url: setting.AppSubUrl + "/dashboards", Icon: "sitemap"},
-		{Text: "Playlists", Id: "playlists", Url: setting.AppSubUrl + "/playlists", Icon: "presentation-play"},
-		{Text: "Snapshots", Id: "snapshots", Url: setting.AppSubUrl + "/dashboard/snapshots", Icon: "camera"},
+	}
+
+	if c.IsGrafanaAdmin {
+		dashboardChildNavs = append(dashboardChildNavs,
+			&dtos.NavLink{Text: "Divider", Divider: true, Id: "divider", HideFromTabs: true},
+			&dtos.NavLink{Text: "Manage", Id: "manage-dashboards", Url: setting.AppSubUrl + "/dashboards", Icon: "sitemap"},
+			&dtos.NavLink{Text: "Playlists", Id: "playlists", Url: setting.AppSubUrl + "/playlists", Icon: "presentation-play"},
+		)
+	}
+
+	if !setting.IsCollabInstance || c.IsGrafanaAdmin {
+		dashboardChildNavs = append(dashboardChildNavs, &dtos.NavLink{
+			Text: "Snapshots",
+			Id:   "snapshots",
+			Url:  setting.AppSubUrl + "/dashboard/snapshots",
+			Icon: "camera",
+		})
 	}
 
 	data.NavTree = append(data.NavTree, &dtos.NavLink{
