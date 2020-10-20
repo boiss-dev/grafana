@@ -361,7 +361,7 @@ func (hs *HTTPServer) setIndexViewData(c *models.ReqContext) (*dtos.IndexViewDat
 	}
 
 	referAFriendNode := &dtos.NavLink{
-		Text:         "Parrainage",
+		Text:         "Parrainer",
 		Id:           "refer-a-friend",
 		Url:          "https://www.mon-cockpit.fr/parrainage?org=" + c.OrgName,
 		Target:       "_blank",

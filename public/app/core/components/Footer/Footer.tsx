@@ -12,21 +12,27 @@ export interface FooterLink {
 export let getFooterLinks = (): FooterLink[] => {
   return [
     {
-      text: 'Documentation',
-      icon: 'document-info',
-      url: 'https://grafana.com/docs/grafana/latest/?utm_source=grafana_footer',
+      text: 'Prise de main',
+      icon: 'life-ring',
+      url: 'https://get.teamviewer.com/moncockpit_support',
       target: '_blank',
     },
     {
-      text: 'Support',
-      icon: 'question-circle',
-      url: 'https://grafana.com/products/enterprise/?utm_source=grafana_footer',
+      text: 'Planifier rendez-vous',
+      icon: 'schedule',
+      url: 'https://www.mon-cockpit.fr/planifier-rendez-vous/',
       target: '_blank',
     },
     {
-      text: 'Community',
-      icon: 'comments-alt',
-      url: 'https://community.grafana.com/?utm_source=grafana_footer',
+      text: "Guide d'utilisation",
+      icon: 'book-alt',
+      url: 'https://vpa.mon-cockpit.fr/public/Guide_de_prise_en_main.pdf',
+      target: '_blank',
+    },
+    {
+      text: 'Mon Compte',
+      icon: 'user-circle',
+      url: 'https://www.mon-cockpit.fr/mon_compte/',
       target: '_blank',
     },
   ];

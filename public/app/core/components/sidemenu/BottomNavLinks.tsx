@@ -89,10 +89,19 @@ export default class BottomNavLinks extends PureComponent<Props, State> {
             );
           })}
 
-          {link.id === 'help' && (
+          {user.isGrafanaAdmin && link.id === 'help' && (
             <li key="keyboard-shortcuts">
               <a onClick={() => this.onOpenShortcuts()}>
                 <Icon name="keyboard" className={subMenuIconClassName} /> Keyboard shortcuts
+              </a>
+            </li>
+          )}
+
+          {link.id === 'help' && (
+            <li key="refer-a-friend-submenu">
+              <a href={'https://www.mon-cockpit.fr/parrainage?org=' + user.orgName} target="_blank" rel="noopener">
+                <Icon name={'game-structure' as IconName} className={subMenuIconClassName} />
+                Parrainer
               </a>
             </li>
           )}
