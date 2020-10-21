@@ -7,8 +7,13 @@ import { ShareExport } from './ShareExport';
 import { ShareEmbed } from './ShareEmbed';
 import { ShareModalTabModel } from './types';
 
-const shareCommonTabs: ShareModalTabModel[] = [
+// prettier-ignore
+const shareLinkTabs: ShareModalTabModel[] = [
   { label: 'Link', value: 'link', component: ShareLink },
+];
+
+// prettier-ignore
+const shareSnapshotTabs: ShareModalTabModel[] = [
   { label: 'Snapshot', value: 'snapshot', component: ShareSnapshot },
 ];
 
@@ -42,14 +47,20 @@ function getInitialState(props: Props): State {
 }
 
 function getTabs(props: Props) {
-  const { panel } = props;
-  const tabs = [...shareCommonTabs];
+  const { panel, isGrafanaAdmin } = props;
+  const tabs = [];
+  if (isGrafanaAdmin) {
+    tabs.push(...shareLinkTabs);
+  }
+  tabs.push(...shareSnapshotTabs);
 
   if (panel) {
     tabs.push(...sharePanelTabs);
     tabs.push(...customPanelTabs);
   } else {
-    tabs.push(...shareDashboardTabs);
+    if (isGrafanaAdmin) {
+      tabs.push(...shareDashboardTabs);
+    }
     tabs.push(...customDashboardTabs);
   }
 
@@ -59,6 +70,7 @@ function getTabs(props: Props) {
 interface Props {
   dashboard: DashboardModel;
   panel?: PanelModel;
+  isGrafanaAdmin: boolean;
 
   onDismiss(): void;
 }

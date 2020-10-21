@@ -5,6 +5,7 @@ import { css } from 'emotion';
 // Utils & Services
 import { appEvents } from 'app/core/app_events';
 import { PlaylistSrv } from 'app/features/playlist/playlist_srv';
+import { ContextSrv } from 'app/core/services/context_srv';
 // Components
 import { DashNavButton } from './DashNavButton';
 import { DashNavTimeControls } from './DashNavTimeControls';
@@ -57,10 +58,12 @@ type Props = StateProps & OwnProps & DispatchProps;
 
 class DashNav extends PureComponent<Props> {
   playlistSrv: PlaylistSrv;
+  contextSrv: ContextSrv;
 
   constructor(props: Props) {
     super(props);
     this.playlistSrv = this.props.$injector.get('playlistSrv');
+    this.contextSrv = this.props.$injector.get('contextSrv');
   }
 
   onFolderNameClick = () => {
@@ -128,6 +131,7 @@ class DashNav extends PureComponent<Props> {
 
   renderLeftActionsButton() {
     const { dashboard } = this.props;
+    const isGrafanaAdmin = this.contextSrv.isGrafanaAdmin;
     const { canShare } = dashboard.meta;
 
     const buttons: ReactNode[] = [];
@@ -145,6 +149,7 @@ class DashNav extends PureComponent<Props> {
               onClick={() => {
                 showModal(ShareModal, {
                   dashboard,
+                  isGrafanaAdmin,
                   onDismiss: hideModal,
                 });
               }}
