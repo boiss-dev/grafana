@@ -23,7 +23,7 @@ export default function BottomSection() {
     <div className="sidemenu__bottom">
       {!isSignedIn && <SignIn />}
       {bottomNav.map((link, index) => {
-        return <BottomNavLinks link={link} user={user} key={`${link.url}-${index}`} />;
+        return <BottomNavLinks link={link} user={user} contextSrv={contextSrv} key={`${link.url}-${index}`} />;
       })}
     </div>
   );

@@ -98,4 +98,5 @@ export interface GrafanaConfig {
   pluginsToPreload: string[];
   featureToggles: FeatureToggles;
   licenseInfo: LicenseInfo;
+  isCollabInstance: boolean;
 }

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import config from 'app/core/config';
+import { config } from 'app/core/config';
 import { Icon, IconName } from '@grafana/ui';
 
 export interface FooterLink {
@@ -10,32 +10,40 @@ export interface FooterLink {
 }
 
 export let getFooterLinks = (): FooterLink[] => {
-  return [
-    {
-      text: 'Prise de main',
-      icon: 'life-ring',
-      url: 'https://get.teamviewer.com/moncockpit_support',
-      target: '_blank',
-    },
-    {
-      text: 'Planifier rendez-vous',
-      icon: 'schedule',
-      url: 'https://www.mon-cockpit.fr/planifier-rendez-vous/',
-      target: '_blank',
-    },
-    {
-      text: "Guide d'utilisation",
-      icon: 'book-alt',
-      url: 'https://vpa.mon-cockpit.fr/public/Guide_de_prise_en_main.pdf',
-      target: '_blank',
-    },
-    {
-      text: 'Mon Compte',
-      icon: 'user-circle',
-      url: 'https://www.mon-cockpit.fr/mon_compte/',
-      target: '_blank',
-    },
-  ];
+  const { isCollabInstance } = config;
+  const { isGrafanaAdmin } = config.bootData.user;
+  const links: FooterLink[] = [];
+
+  links.push({
+    text: 'Prise de main',
+    icon: 'life-ring',
+    url: 'https://get.teamviewer.com/moncockpit_support',
+    target: '_blank',
+  });
+  if (!isCollabInstance || isGrafanaAdmin) {
+    links.push(
+      {
+        text: 'Planifier rendez-vous',
+        icon: 'schedule',
+        url: 'https://www.mon-cockpit.fr/planifier-rendez-vous/',
+        target: '_blank',
+      },
+      {
+        text: "Guide d'utilisation",
+        icon: 'book-alt',
+        url: 'https://vpa.mon-cockpit.fr/public/Guide_de_prise_en_main.pdf',
+        target: '_blank',
+      },
+      {
+        text: 'Mon Compte',
+        icon: 'user-circle',
+        url: 'https://www.mon-cockpit.fr/mon_compte/',
+        target: '_blank',
+      }
+    );
+  }
+
+  return links;
 };
 
 export let getVersionLinks = (): FooterLink[] => {

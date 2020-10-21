@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { css } from 'emotion';
 import appEvents from '../../app_events';
-import { User } from '../../services/context_srv';
+import { User, ContextSrv } from '../../services/context_srv';
 import { NavModelItem } from '@grafana/data';
 import { Icon, IconName } from '@grafana/ui';
 import { CoreEvents } from 'app/types';
@@ -11,6 +11,7 @@ import { getFooterLinks } from '../Footer/Footer';
 export interface Props {
   link: NavModelItem;
   user: User;
+  contextSrv: ContextSrv;
 }
 
 interface State {
@@ -35,7 +36,7 @@ export default class BottomNavLinks extends PureComponent<Props, State> {
   };
 
   render() {
-    const { link, user } = this.props;
+    const { link, user, contextSrv } = this.props;
     const { showSwitcherModal } = this.state;
     const subMenuIconClassName = css`
       margin-right: 8px;
@@ -89,7 +90,7 @@ export default class BottomNavLinks extends PureComponent<Props, State> {
             );
           })}
 
-          {user.isGrafanaAdmin && link.id === 'help' && (
+          {link.id === 'help' && user.isGrafanaAdmin && (
             <li key="keyboard-shortcuts">
               <a onClick={() => this.onOpenShortcuts()}>
                 <Icon name="keyboard" className={subMenuIconClassName} /> Keyboard shortcuts
@@ -97,7 +98,7 @@ export default class BottomNavLinks extends PureComponent<Props, State> {
             </li>
           )}
 
-          {link.id === 'help' && (
+          {link.id === 'help' && (user.isGrafanaAdmin || !contextSrv.isCollabInstance) && (
             <li key="refer-a-friend-submenu">
               <a href={'https://www.mon-cockpit.fr/parrainage?org=' + user.orgName} target="_blank" rel="noopener">
                 <Icon name={'game-structure' as IconName} className={subMenuIconClassName} />

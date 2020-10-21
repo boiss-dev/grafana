@@ -226,6 +226,7 @@ func (hs *HTTPServer) getFrontendSettingsMap(c *models.ReqContext) (map[string]i
 		},
 		"featureToggles":    hs.Cfg.FeatureToggles,
 		"rendererAvailable": hs.RenderService.IsAvailable(),
+		"isCollabInstance":  setting.IsCollabInstance,
 	}
 
 	return jsonObj, nil

@@ -34,6 +34,7 @@ export class ContextSrv {
   sidemenuSmallBreakpoint = false;
   hasEditPermissionInFolders: boolean;
   minRefreshInterval: string;
+  isCollabInstance: boolean;
 
   constructor() {
     if (!config.bootData) {
@@ -46,6 +47,7 @@ export class ContextSrv {
     this.isEditor = this.hasRole('Editor') || this.hasRole('Admin');
     this.hasEditPermissionInFolders = this.user.hasEditPermissionInFolders;
     this.minRefreshInterval = config.minRefreshInterval;
+    this.isCollabInstance = config.isCollabInstance;
   }
 
   hasRole(role: string) {
