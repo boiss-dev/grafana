@@ -19,6 +19,7 @@ import (
 	"github.com/grafana/grafana/pkg/infra/metrics"
 	"github.com/grafana/grafana/pkg/plugins"
 	"github.com/grafana/grafana/pkg/services/guardian"
+	"github.com/grafana/grafana/pkg/setting"
 	"github.com/grafana/grafana/pkg/util"
 )
 
@@ -62,6 +63,11 @@ func (hs *HTTPServer) GetDashboard(c *models.ReqContext) Response {
 	canSave, _ := guardian.CanSave()
 	canAdmin, _ := guardian.CanAdmin()
 
+	var canShare bool = true
+	if setting.IsCollabInstance && !c.IsGrafanaAdmin {
+		canShare = false
+	}
+
 	isStarred, err := isDashboardStarredByUser(c, dash.Id)
 	if err != nil {
 		return Error(500, "Error while checking if dashboard was starred by user", err)
@@ -80,6 +86,7 @@ func (hs *HTTPServer) GetDashboard(c *models.ReqContext) Response {
 		IsStarred:   isStarred,
 		Slug:        dash.Slug,
 		Type:        models.DashTypeDB,
+		CanShare:    canShare,
 		CanStar:     c.IsSignedIn,
 		CanSave:     canSave,
 		CanEdit:     canEdit,

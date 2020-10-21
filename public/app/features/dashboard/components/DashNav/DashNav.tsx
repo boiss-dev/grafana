@@ -128,23 +128,9 @@ class DashNav extends PureComponent<Props> {
 
   renderLeftActionsButton() {
     const { dashboard } = this.props;
-    const { canStar, canShare, isStarred } = dashboard.meta;
+    const { canShare } = dashboard.meta;
 
     const buttons: ReactNode[] = [];
-    if (canStar) {
-      buttons.push(
-        <DashNavButton
-          tooltip="Mark as favorite"
-          classSuffix="star"
-          icon={isStarred ? 'favorite' : 'star'}
-          iconType={isStarred ? 'mono' : 'default'}
-          iconSize="lg"
-          noBorder={true}
-          onClick={this.onStarDashboard}
-          key="button-star"
-        />
-      );
-    }
 
     if (canShare) {
       buttons.push(
