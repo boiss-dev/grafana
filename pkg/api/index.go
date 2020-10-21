@@ -205,12 +205,18 @@ func (hs *HTTPServer) setIndexViewData(c *models.ReqContext) (*dtos.IndexViewDat
 			})
 		} else {
 			if !setting.IsCollabInstance {
+				var hideFromTabs bool
+				if !c.IsGrafanaAdmin {
+					hideFromTabs = true
+				}
+
 				profileNode.Children = append(profileNode.Children, &dtos.NavLink{
 					Text:         "Changer le mot de passe",
 					Id:           "change-password",
 					Url:          "https://www.mon-cockpit.fr/forgot_password/",
 					Icon:         "lock",
 					HideFromMenu: true,
+					HideFromTabs: hideFromTabs,
 					Target:       "_blank",
 				})
 			}
