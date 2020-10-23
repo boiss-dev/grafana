@@ -46,6 +46,9 @@ export default class BottomNavLinks extends PureComponent<Props, State> {
 
     if (link.id === 'help') {
       children = getFooterLinks();
+      if (!user.isGrafanaAdmin) {
+        link.subTitle = '';
+      }
     }
 
     return (
