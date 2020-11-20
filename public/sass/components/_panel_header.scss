@@ -192,3 +192,14 @@ $panel-header-no-title-zindex: 1;
   position: absolute;
   right: 0;
 }
+
+.export-excel {
+  font-weight: $font-weight-semi-bold;
+  float: right;
+  margin-right: 8px;
+  color: green;
+  font-size: 85%;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}

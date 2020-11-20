@@ -5,6 +5,8 @@ import { DataLink, LoadingState, PanelData, PanelMenuItem, QueryResultMetaNotice
 import { AngularComponent } from '@grafana/runtime';
 import { ClickOutsideWrapper, Icon, Tooltip } from '@grafana/ui';
 import { selectors } from '@grafana/e2e-selectors';
+import XLSX from 'xlsx';
+import FileSaver from 'file-saver';
 
 import PanelHeaderCorner from './PanelHeaderCorner';
 import { PanelHeaderMenu } from './PanelHeaderMenu';
@@ -101,6 +103,39 @@ export class PanelHeader extends Component<Props, State> {
     );
   }
 
+  onExportExcelClick = (event: React.MouseEvent<HTMLSpanElement>) => {
+    const { panel, data } = this.props;
+
+    let fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let excelData = this.buildExcelData(data.series[0]);
+
+    const ws = XLSX.utils.json_to_sheet(excelData);
+    const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const file = new Blob([excelBuffer], { type: fileType });
+    let filename = panel.title
+      .toLowerCase()
+      .replace(/[^a-z0-9 ]/g, '')
+      .trim();
+    FileSaver.saveAs(file, filename + '.xlsx');
+
+    event.stopPropagation();
+  };
+
+  buildExcelData(serie: any): any[] {
+    let excelData: any[] = [];
+    let i: number;
+    for (i = 0; i < serie.length; i++) {
+      var record: { [key: string]: string } = {};
+      serie.fields.forEach((field: { name: string; values: any }) => {
+        record[field.name] = field.values.buffer[i];
+      });
+      excelData.push(record);
+    }
+    console.log(excelData);
+    return excelData;
+  }
+
   openInspect = (e: React.SyntheticEvent, tab: string) => {
     const { updateLocation, panel } = this.props;
 
@@ -189,6 +224,11 @@ export class PanelHeader extends Component<Props, State> {
               {data.request && data.request.timeInfo && (
                 <span className="panel-time-info">
                   <Icon name="clock-nine" size="sm" /> {data.request.timeInfo}
+                </span>
+              )}
+              {panel.type === 'table' && (
+                <span className="export-excel" onClick={this.onExportExcelClick}>
+                  <Icon name="export" size="sm" />
                 </span>
               )}
             </div>

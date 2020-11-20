@@ -58,6 +58,7 @@ export type IconName =
   | 'chart-line'
   | 'search-minus'
   | 'clock-nine'
+  | 'export'
   | 'sync'
   | 'sign-in-alt'
   | 'cloud-download'
@@ -172,6 +173,7 @@ export const getAvailableIcons = (): IconName[] => [
   'chart-line',
   'search-minus',
   'clock-nine',
+  'export',
   'sync',
   'sign-in-alt',
   'cloud-download',
