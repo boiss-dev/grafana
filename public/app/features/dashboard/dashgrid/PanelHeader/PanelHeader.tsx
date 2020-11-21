@@ -228,7 +228,7 @@ export class PanelHeader extends Component<Props, State> {
               )}
               {panel.type === 'table' && (
                 <span className="export-excel" onClick={this.onExportExcelClick}>
-                  <Icon name="export" size="sm" />
+                  <Icon name="file-download-alt" size="xl" />
                 </span>
               )}
             </div>
