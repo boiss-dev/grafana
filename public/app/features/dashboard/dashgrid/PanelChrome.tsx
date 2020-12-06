@@ -27,6 +27,8 @@ import {
   FieldConfigSource,
 } from '@grafana/data';
 import { selectors } from '@grafana/e2e-selectors';
+import { CoreEvents } from 'app/types';
+import appEvents from 'app/core/app_events';
 
 const DEFAULT_PLUGIN_ERROR = 'Error in plugin';
 
@@ -268,6 +270,20 @@ export class PanelChrome extends PureComponent<Props, State> {
       'panel-content--no-padding': plugin.noPadding,
     });
     const panelOptions = panel.getOptions();
+
+    if (loading === LoadingState.Done && panel.type === 'stat' && !panel.isEditing) {
+      const warningDetector = 'ATTENTION - ';
+      let value: any = data.series[0].fields[0].values;
+      if (value.buffer.length > 0) {
+        let message = value.buffer[value.buffer.length - 1];
+        if (message.startsWith(warningDetector)) {
+          appEvents.emit(CoreEvents.showModal, {
+            src: 'public/custom/incomplete-data-popup.html',
+            model: { message: message.replace(warningDetector, '') },
+          });
+        }
+      }
+    }
 
     return (
       <>
