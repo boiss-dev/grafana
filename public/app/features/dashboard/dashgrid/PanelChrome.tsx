@@ -274,6 +274,7 @@ export class PanelChrome extends PureComponent<Props, State> {
     if (loading === LoadingState.Done && panel.type === 'stat' && !panel.isEditing) {
       const warningDetector = 'ATTENTION - ';
       let value: any = data.series[0].fields[0].values;
+      console.log(value);
       if (value.buffer.length > 0) {
         let message = value.buffer[value.buffer.length - 1];
         if (message.toString().startsWith(warningDetector)) {
