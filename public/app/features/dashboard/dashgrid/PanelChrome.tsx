@@ -276,7 +276,7 @@ export class PanelChrome extends PureComponent<Props, State> {
       let value: any = data.series[0].fields[0].values;
       if (value.buffer.length > 0) {
         let message = value.buffer[value.buffer.length - 1];
-        if (message.startsWith(warningDetector)) {
+        if (message.toString().startsWith(warningDetector)) {
           appEvents.emit(CoreEvents.showModal, {
             src: 'public/custom/incomplete-data-popup.html',
             model: { message: message.replace(warningDetector, '') },
