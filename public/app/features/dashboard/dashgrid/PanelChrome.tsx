@@ -28,8 +28,8 @@ import {
   FieldConfigSource,
 } from '@grafana/data';
 import { selectors } from '@grafana/e2e-selectors';
-// import { CoreEvents } from 'app/types';
-// import appEvents from 'app/core/app_events';
+import { CoreEvents } from 'app/types';
+import appEvents from 'app/core/app_events';
 
 const DEFAULT_PLUGIN_ERROR = 'Error in plugin';
 
@@ -272,27 +272,30 @@ export class PanelChrome extends PureComponent<Props, State> {
     });
     const panelOptions = panel.getOptions();
 
-    // if (loading === LoadingState.Done && panel.type === 'stat' && !panel.isEditing) {
-    //   let value: any = data.series[0].fields[0].values;
+    if (loading === LoadingState.Done && panel.type === 'stat' && !panel.isEditing) {
+      console.log(data);
+      if (data.series.length > 0) {
+        let value: any = data.series[0].fields[0].values;
 
-    //   if (typeof value.buffer !== 'undefined') {
-    //     if (value.buffer.length > 0) {
-    //       const warningDetector = 'ATTENTION - ';
-    //       let message = value.buffer[value.buffer.length - 1];
+        if (typeof value.buffer !== 'undefined') {
+          if (value.buffer.length > 0) {
+            const warningDetector = 'ATTENTION - ';
+            let message = value.buffer[value.buffer.length - 1];
 
-    //       if (message.toString().startsWith(warningDetector)) {
-    //         appEvents.emit(CoreEvents.showModal, {
-    //           src: 'public/custom/incomplete-data-popup.html',
-    //           model: { message: message.replace(warningDetector, '') },
-    //         });
-    //       }
-    //     }
-    //   }
-    // }
+            if (message.toString().startsWith(warningDetector)) {
+              appEvents.emit(CoreEvents.showModal, {
+                src: 'public/custom/incomplete-data-popup.html',
+                model: { message: message.replace(warningDetector, '') },
+              });
+            }
+          }
+        }
+      }
+    }
 
     return (
       <>
-        <div className={panelContentClassNames}>
+        <div title="c23" className={panelContentClassNames}>
           <PanelComponent
             id={panel.id}
             data={data}
