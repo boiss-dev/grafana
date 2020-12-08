@@ -28,8 +28,6 @@ import {
   FieldConfigSource,
 } from '@grafana/data';
 import { selectors } from '@grafana/e2e-selectors';
-import { CoreEvents } from 'app/types';
-import appEvents from 'app/core/app_events';
 
 const DEFAULT_PLUGIN_ERROR = 'Error in plugin';
 
@@ -243,36 +241,6 @@ export class PanelChrome extends PureComponent<Props, State> {
     });
   };
 
-  checkWTBPopup() {
-    const { panel } = this.props;
-    const { data } = this.state;
-    const loading = data.state;
-
-    console.log(panel.title);
-    console.log(panel.type);
-
-    if (loading === LoadingState.Done && panel.type === 'stat' && !panel.isEditing) {
-      console.log(data);
-      if (data.series.length > 0) {
-        let value: any = data.series[0].fields[0].values;
-
-        if (typeof value.buffer !== 'undefined') {
-          if (value.buffer.length > 0) {
-            const warningDetector = 'ATTENTION - ';
-            let message = value.buffer[value.buffer.length - 1];
-
-            if (message.toString().startsWith(warningDetector)) {
-              appEvents.emit(CoreEvents.showModal, {
-                src: 'public/custom/incomplete-data-popup.html',
-                model: { message: message.replace(warningDetector, '') },
-              });
-            }
-          }
-        }
-      }
-    }
-  }
-
   renderPanel(width: number, height: number) {
     const { panel, plugin } = this.props;
     const { renderCounter, data, isFirstLoad } = this.state;
@@ -301,8 +269,6 @@ export class PanelChrome extends PureComponent<Props, State> {
       'panel-content--no-padding': plugin.noPadding,
     });
     const panelOptions = panel.getOptions();
-
-    // this.checkWTBPopup();
 
     return (
       <>

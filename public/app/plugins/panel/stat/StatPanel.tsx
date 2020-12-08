@@ -9,6 +9,7 @@ import {
   BigValueTextMode,
 } from '@grafana/ui';
 import {
+  DisplayValue,
   DisplayValueAlignmentFactors,
   FieldDisplay,
   getDisplayValueAlignmentFactors,
@@ -20,6 +21,8 @@ import {
 import { config } from 'app/core/config';
 import { StatPanelOptions } from './types';
 import { DataLinksContextMenuApi } from '@grafana/ui/src/components/DataLinks/DataLinksContextMenu';
+import { CoreEvents } from 'app/types';
+import appEvents from 'app/core/app_events';
 
 export class StatPanel extends PureComponent<PanelProps<StatPanelOptions>> {
   renderComponent = (
@@ -46,6 +49,10 @@ export class StatPanel extends PureComponent<PanelProps<StatPanelOptions>> {
       }
     }
 
+    if (value.display.title === 'wtb') {
+      this.checkWTBLogToDisplayPopup(value.display);
+    }
+
     return (
       <BigValue
         value={value.display}
@@ -64,6 +71,23 @@ export class StatPanel extends PureComponent<PanelProps<StatPanelOptions>> {
       />
     );
   };
+
+  checkWTBLogToDisplayPopup(value: DisplayValue) {
+    try {
+      console.log(value);
+      const warningDetector = 'ATTENTION - ';
+      let message = value.text;
+
+      if (message.toString().startsWith(warningDetector)) {
+        appEvents.emit(CoreEvents.showModal, {
+          src: 'public/custom/incomplete-data-popup.html',
+          model: { message: message.replace(warningDetector, '') },
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   getTextMode() {
     const { options, fieldConfig, title } = this.props;
