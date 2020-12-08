@@ -294,7 +294,7 @@ export class PanelChrome extends PureComponent<Props, State> {
 
     return (
       <>
-        <div title="c23" className={panelContentClassNames}>
+        <div className={panelContentClassNames}>
           <PanelComponent
             id={panel.id}
             data={data}
