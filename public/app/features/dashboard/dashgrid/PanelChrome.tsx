@@ -273,7 +273,6 @@ export class PanelChrome extends PureComponent<Props, State> {
     const panelOptions = panel.getOptions();
 
     if (loading === LoadingState.Done && panel.type === 'stat' && !panel.isEditing) {
-      console.log(data);
       if (data.series.length > 0) {
         let value: any = data.series[0].fields[0].values;
 
