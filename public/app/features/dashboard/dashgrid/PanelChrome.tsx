@@ -243,6 +243,36 @@ export class PanelChrome extends PureComponent<Props, State> {
     });
   };
 
+  checkWTBPopup() {
+    const { panel } = this.props;
+    const { data } = this.state;
+    const loading = data.state;
+
+    console.log(panel.title);
+    console.log(panel.type);
+
+    if (loading === LoadingState.Done && panel.type === 'stat' && !panel.isEditing) {
+      console.log(data);
+      if (data.series.length > 0) {
+        let value: any = data.series[0].fields[0].values;
+
+        if (typeof value.buffer !== 'undefined') {
+          if (value.buffer.length > 0) {
+            const warningDetector = 'ATTENTION - ';
+            let message = value.buffer[value.buffer.length - 1];
+
+            if (message.toString().startsWith(warningDetector)) {
+              appEvents.emit(CoreEvents.showModal, {
+                src: 'public/custom/incomplete-data-popup.html',
+                model: { message: message.replace(warningDetector, '') },
+              });
+            }
+          }
+        }
+      }
+    }
+  }
+
   renderPanel(width: number, height: number) {
     const { panel, plugin } = this.props;
     const { renderCounter, data, isFirstLoad } = this.state;
@@ -272,25 +302,7 @@ export class PanelChrome extends PureComponent<Props, State> {
     });
     const panelOptions = panel.getOptions();
 
-    if (loading === LoadingState.Done && panel.type === 'stat' && !panel.isEditing) {
-      if (data.series.length > 0) {
-        let value: any = data.series[0].fields[0].values;
-
-        if (typeof value.buffer !== 'undefined') {
-          if (value.buffer.length > 0) {
-            const warningDetector = 'ATTENTION - ';
-            let message = value.buffer[value.buffer.length - 1];
-
-            if (message.toString().startsWith(warningDetector)) {
-              appEvents.emit(CoreEvents.showModal, {
-                src: 'public/custom/incomplete-data-popup.html',
-                model: { message: message.replace(warningDetector, '') },
-              });
-            }
-          }
-        }
-      }
-    }
+    // this.checkWTBPopup();
 
     return (
       <>
