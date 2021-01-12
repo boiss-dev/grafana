@@ -17,6 +17,7 @@ import { PanelModel } from 'app/features/dashboard/state/PanelModel';
 import { getPanelLinksSupplier } from 'app/features/panel/panellinks/linkSuppliers';
 import { getPanelMenu } from 'app/features/dashboard/utils/getPanelMenu';
 import { updateLocation } from 'app/core/actions';
+import { config } from 'app/core/config';
 
 export interface Props {
   panel: PanelModel;
@@ -167,6 +168,7 @@ export class PanelHeader extends Component<Props, State> {
     const { panel, scopedVars, error, isViewing, isEditing, data, alertState } = this.props;
     const { menuItems } = this.state;
     const title = templateSrv.replaceWithText(panel.title, scopedVars);
+    const { isCollabInstance } = config;
 
     const panelHeaderClass = classNames({
       'panel-header': true,
@@ -226,7 +228,7 @@ export class PanelHeader extends Component<Props, State> {
                   <Icon name="clock-nine" size="sm" /> {data.request.timeInfo}
                 </span>
               )}
-              {panel.type === 'table' && (
+              {panel.type === 'table' && !isCollabInstance && (
                 <span className="export-excel" onClick={this.onExportExcelClick}>
                   <Icon name="file-download-alt" size="xl" />
                 </span>
