@@ -127,9 +127,14 @@ export class PanelHeader extends Component<Props, State> {
     let excelData: any[] = [];
     let i: number;
     for (i = 0; i < serie.length; i++) {
-      var record: { [key: string]: string } = {};
+      var record: { [key: string]: any } = {};
       serie.fields.forEach((field: { name: string; values: any }) => {
-        record[field.name] = field.values.buffer[i];
+        if (field.name.toLowerCase() === 'time') {
+          var d = new Date(field.values.buffer[i]);
+          record[field.name] = d;
+        } else {
+          record[field.name] = field.values.buffer[i];
+        }
       });
       excelData.push(record);
     }
