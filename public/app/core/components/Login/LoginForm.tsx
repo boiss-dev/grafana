@@ -4,6 +4,7 @@ import { selectors } from '@grafana/e2e-selectors';
 import { FormModel } from './LoginCtrl';
 import { Button, Form, Input, Field } from '@grafana/ui';
 import { css } from 'emotion';
+import { config } from 'app/core/config';
 
 interface Props {
   children: ReactElement;
@@ -24,17 +25,23 @@ export const submitButton = css`
 `;
 
 export const LoginForm: FC<Props> = ({ children, onSubmit, isLoggingIn, passwordHint, loginHint }) => {
+  const { isCollabInstance } = config;
+
   return (
     <div className={wrapperStyles}>
       <Form onSubmit={onSubmit} validateOn="onChange">
         {({ register, errors }) => (
           <>
-            <Field label="Email" invalid={!!errors.user} error={errors.user?.message}>
+            <Field
+              label={!isCollabInstance ? 'Email' : 'Code Agence Principal'}
+              invalid={!!errors.user}
+              error={errors.user?.message}
+            >
               <Input
                 autoFocus
                 name="user"
                 ref={register({ required: 'Email obligatoire' })}
-                placeholder={loginHint}
+                placeholder={!isCollabInstance ? loginHint : 'en majuscule'}
                 aria-label={selectors.pages.Login.username}
               />
             </Field>

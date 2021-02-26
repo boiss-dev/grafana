@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { css } from 'emotion';
 import { useTheme } from '@grafana/ui';
+import { config } from 'app/core/config';
 
 export interface BrandComponentProps {
   className?: string;
@@ -27,13 +28,18 @@ const LoginBoxBackground = () => {
   `;
 };
 
+const LoginTitle = () => {
+  const { isCollabInstance } = config;
+  return `Bienvenue sur Mon-Cockpit ${isCollabInstance ? 'pour les collaborateurs' : ''}`;
+};
+
 export class Branding {
   static LoginLogo = LoginLogo;
   static LoginBackground = LoginBackground;
   static MenuLogo = MenuLogo;
   static LoginBoxBackground = LoginBoxBackground;
   static AppTitle = 'Mon-Cockpit';
-  static LoginTitle = 'Bienvenue sur Mon-Cockpit';
+  static LoginTitle = LoginTitle;
   static GetLoginSubTitle = () => {
     const slogans = [
       "Don't get in the way of the data",

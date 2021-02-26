@@ -20,7 +20,7 @@ export const LoginLayout: FC = ({ children }) => {
         <div className={loginStyles.loginLogoWrapper}>
           <Branding.LoginLogo className={loginStyles.loginLogo} />
           <div className={loginStyles.titleWrapper}>
-            <h1 className={loginStyles.mainTitle}>{Branding.LoginTitle}</h1>
+            <h1 className={loginStyles.mainTitle}>{Branding.LoginTitle()}</h1>
             {/* <h3 className={loginStyles.subTitle}>{Branding.GetLoginSubTitle()}</h3> */}
           </div>
         </div>
