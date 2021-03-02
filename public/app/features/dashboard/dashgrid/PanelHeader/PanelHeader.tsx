@@ -108,7 +108,7 @@ export class PanelHeader extends Component<Props, State> {
     const { panel, data } = this.props;
 
     let fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-    let excelData = this.buildExcelData(data.series[0]);
+    let excelData = data.series[0] !== undefined ? this.buildExcelData(data.series[0]) : [];
 
     const ws = XLSX.utils.json_to_sheet(excelData);
     const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
@@ -119,13 +119,13 @@ export class PanelHeader extends Component<Props, State> {
       .replace(/[^a-z0-9 ]/g, '')
       .trim();
     FileSaver.saveAs(file, filename + '.xlsx');
-
     event.stopPropagation();
   };
 
   buildExcelData(serie: any): any[] {
     let excelData: any[] = [];
     let i: number;
+
     for (i = 0; i < serie.length; i++) {
       var record: { [key: string]: any } = {};
       serie.fields.forEach((field: { name: string; values: any }) => {
@@ -133,7 +133,17 @@ export class PanelHeader extends Component<Props, State> {
           var d = new Date(field.values.buffer[i]);
           record[field.name] = d;
         } else {
-          record[field.name] = field.values.buffer[i];
+          if (field.values.buffer !== undefined) {
+            record[field.name] = field.values.buffer[i];
+          } else {
+            if (field.values.operation !== undefined) {
+              let left = field.values.left.buffer;
+              let right = field.values.right.buffer;
+              record[field.name] = field.values.operation(left[i], right[i]);
+            } else {
+              record[field.name] = 'error';
+            }
+          }
         }
       });
       excelData.push(record);
