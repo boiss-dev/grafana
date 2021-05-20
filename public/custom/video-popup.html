@@ -1,0 +1,49 @@
+<div class="modal-body">
+	<div class="modal-header">
+		<h2 class="modal-header-title">
+			<icon name="'play'" size="'lg'"></icon>
+			<span class="p-l-1">{{model.title}}</span>
+		</h2>
+
+		<a class="modal-header-close" ng-click="dismiss();">
+			<icon name="'times'"></icon>
+		</a>
+	</div>
+
+	<div class="modal-content">
+		<iframe src="{{model.url | trusted}}" width="100%" height="600" frameborder="0" webkitallowfullscreen
+			mozallowfullscreen allowfullscreen></iframe>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-secondary btn-video" data-video-id="{{model.id}}" ng-click="dismiss();">
+			J'ai tout compris</button>
+	</div>
+</div>
+
+<script>
+	var website = website || {};
+
+	(function (publics) {
+		var privates = {};
+
+		publics.init = function () {
+			let btnClose = document.querySelector(".btn-video");
+
+			btnClose.addEventListener("click", function () {
+				let videoId = this.getAttribute("data-video-id");
+				privates.setCookie('video-' + videoId, true, 365);
+				dismiss();
+			});
+		};
+
+		privates.setCookie = function (cname, cvalue, exdays) {
+			var d = new Date();
+			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+			var expires = "expires=" + d.toUTCString();
+			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		};
+
+	})(website);
+
+	website.init();
+</script>

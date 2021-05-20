@@ -148,6 +148,15 @@ export class GrafanaApp {
       }
     );
 
+    app.filter('trusted', [
+      '$sce',
+      function($sce) {
+        return function(url: any) {
+          return $sce.trustAsResourceUrl(url);
+        };
+      },
+    ]);
+
     this.ngModuleDependencies = [
       'grafana.core',
       'ngRoute',

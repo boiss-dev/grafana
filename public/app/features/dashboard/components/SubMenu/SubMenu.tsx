@@ -8,6 +8,8 @@ import { DashboardLinks } from './DashboardLinks';
 import { Annotations } from './Annotations';
 import { SubMenuItems } from './SubMenuItems';
 import { DashboardLink } from '../../state/DashboardModel';
+import { appEvents } from 'app/core/app_events';
+import { CoreEvents } from 'app/types';
 
 interface OwnProps {
   dashboard: DashboardModel;
@@ -50,8 +52,53 @@ class SubMenuUnConnected extends PureComponent<Props> {
     return visibleAnnotations.length > 0;
   };
 
+  checkToDisplayVideo(links: DashboardLink[]) {
+    try {
+      links.forEach((link: DashboardLink) => {
+        const videoDetector = 'vimeo:';
+        if (link.url.startsWith(videoDetector)) {
+          let videoId = link.url.substring(videoDetector.length, link.url.length);
+          let videoUrl = 'https://player.vimeo.com/video/' + videoId + '?title=0&byline=0&portrait=0';
+
+          if (!this.getCookie('video-' + videoId)) {
+            appEvents.emit(CoreEvents.showModal, {
+              src: 'public/custom/video-popup.html',
+              model: {
+                id: videoId,
+                url: videoUrl,
+                title: link.title,
+              },
+              modalClass: 'video',
+            });
+            console.log(document.querySelectorAll('.btn-video'));
+          }
+        }
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  getCookie(cname: string) {
+    var name = cname + '=';
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return '';
+  }
+
   render() {
     const { dashboard, variables, links } = this.props;
+
+    this.checkToDisplayVideo(links);
 
     if (!this.isSubMenuVisible()) {
       return null;
